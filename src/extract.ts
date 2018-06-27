@@ -19,8 +19,8 @@ export class Extract {
      * @param filePath the path to the file to extract. The type of the file is determine based on the extension (IPA, APK, APPX, APPXBUNDLE, ZIP).
      * @param workingFolder The content of the packages will be extracted to this folder. After extraction this folder will hold the icons and other none temporarily files. If no folder is supplied the machine's temp folder (using tmp NPM) is used.
      */
-    public static async run(filePath: string, workingFolder?: string): Promise<IPackageMetadata> {
-        const file = await File.create(filePath);
+    public static async run(fileOrPath: string | File, workingFolder?: string): Promise<IPackageMetadata> {
+        const file = (fileOrPath instanceof File) ? fileOrPath : (await File.create(fileOrPath));
         const folder = await WorkingFolder.create(workingFolder);
 
         let appPackage: ContentBase;
